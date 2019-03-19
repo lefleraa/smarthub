@@ -31,7 +31,7 @@ class App extends Component {
     this.skipToNext = this.skipToNext.bind(this);
     this.skipToPrevious = this.skipToPrevious.bind(this);
     this.toggleShuffle = this.toggleShuffle.bind(this);
-    this.setRepeat = this.setRepeat.bind(this);
+    this.changeRepeat = this.changeRepeat.bind(this);
     this.transferToDevice = this.transferToDevice.bind(this);
     this.seek = this.seek.bind(this);
 
@@ -293,29 +293,34 @@ class App extends Component {
     });
   }
 
-  setRepeat(callback=_.noop())
-  {
+  changeRepeat(callback=_.noop()) {
     let self = this;
 
     const {
       repeat_state
     } = self.state.nowPlaying.playingState;
 
-    let new_repeat_state = 'off';
-
     if (repeat_state === 'off')
     {
-      new_repeat_state = 'context';
+      self.setRepeat('context', callback);
     }
     else if (repeat_state === 'context')
     {
-      new_repeat_state = 'track';
+      self.setRepeat('track', callback);
     }
+    else
+    {
+      self.setRepeat('off', callback);
+    }
+  }
 
+  setRepeat(update, callback=_.noop())
+  {
+    let self = this;
     self.optimisticSetPlaybackState({
-      repeat_state: new_repeat_state
+      repeat_state: update
     }, () => {
-      spotifyApi.setRepeat(new_repeat_state).then(callback);
+      spotifyApi.setRepeat(update).then(callback);
     });
   }
 
@@ -386,7 +391,7 @@ class App extends Component {
                               onSkipToNext:     self.skipToNext,
                               onSkipToPrevious: self.skipToPrevious,
                               onToggleShuffle:  self.toggleShuffle,
-                              onChangeRepeat:   self.setRepeat,
+                              onChangeRepeat:   self.changeRepeat,
                               onSelectDevice:   self.transferToDevice,
                               onSeek:           self.seek
                             }}

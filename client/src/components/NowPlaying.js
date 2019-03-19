@@ -109,8 +109,8 @@ const PlayerControls = (props) => (
       ></span>
     </div>
     <span className={"major-controls-icon far fa-fw fa-repeat"
-                   + ((props.repeatMode === "context" || props.repeatMode === "track") ? " major-controls-icon-active" : "")
-                   + ((props.repeatMode === "track") ? " major-controls-icon-repeat-track" : "") }
+                   + ((props.repeatMode === "track")   ? "  major-controls-icon-active major-controls-icon-repeat-track" : "")
+                   + ((props.repeatMode === "context") ? " major-controls-icon-active" : "")}
           onClick={props.actions.onChangeRepeat}
     ></span>
   </div>
