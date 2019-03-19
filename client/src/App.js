@@ -73,10 +73,10 @@ class App extends Component {
     let self = this;
     self.stopPlaybackPolling(() => {
       self.playbackPolling = setInterval(() => {
-        self.getPlayerData();
+        self.getPlayerData(callback);
         self.getUserData();
       }, self.pollingInterval);
-    }, callback);
+    });
   }
 
   stopPlaybackPolling(callback=_.noop()) {
@@ -247,7 +247,7 @@ class App extends Component {
     spotifyApi.pause().then(() => {
       self.setPlaybackState({
         is_playing: false
-      });
+      }, callback);
     });
   }
 
@@ -290,7 +290,7 @@ class App extends Component {
 
   skipToNext(callback=_.noop()) {
     let self = this;
-    spotifyApi.skipToNext(() => {
+    spotifyApi.skipToNext().then(() => {
       self.seek(0, () => {
         self.playerPlay(callback);
       })
@@ -299,7 +299,7 @@ class App extends Component {
 
   skipToPrevious(callback=_.noop()) {
     let self = this;
-    spotifyApi.skipToNext(() => {
+    spotifyApi.skipToNext().then(() => {
       self.seek(0, () => {
         self.playerPlay(callback);
       })
@@ -310,8 +310,8 @@ class App extends Component {
     let self = this;
     spotifyApi.seek(ms_position).then(() => {
       self.playerPlay(() => {
-        self.startPlaybackPolling();
-      }, callback);
+        self.startPlaybackPolling(callback);
+      });
     });
   }
 
