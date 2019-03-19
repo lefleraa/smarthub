@@ -1,0 +1,36 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "hh-mm-ss": "^1.2.0",
+    "less": "^3.9.0",
+    "lodash": "^4.17.10",
+    "moment": "2.22.2",
+    "jquery": "3.3.1",
+    "react": "^16.8.4",
+    "react-bootstrap": "^1.0.0-beta.3",
+    "react-dom": "^16.8.4",
+    "react-scripts": "2.1.8",
+    "spotify-web-api-js": "^1.2.0"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-pro": "^5.7.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "less": "lessc 'src/static/stylesheets/less/_master_compile.less' 'src/static/stylesheets/css/style.css'"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
