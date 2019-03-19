@@ -18817,7 +18817,11 @@ body {
   filter: blur(80px);
 }
 .major-album-background {
-  background: rgba(0, 0, 0, 0.7);
+  background: -webkit-linear-gradient(315deg, rgba(0, 0, 0, 0.95), rgba(45, 45, 45, 0.65));
+  background: -moz-linear-gradient(315deg, rgba(0, 0, 0, 0.95), rgba(45, 45, 45, 0.65));
+  background: -ms-linear-gradient(315deg, rgba(0, 0, 0, 0.95), rgba(45, 45, 45, 0.65));
+  background: -o-linear-gradient(315deg, rgba(0, 0, 0, 0.95), rgba(45, 45, 45, 0.65));
+  background: linear-gradient(315deg, rgba(0, 0, 0, 0.95), rgba(45, 45, 45, 0.65));
 }
 .list-styles {
   -webkit-border-radius: 4px;

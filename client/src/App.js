@@ -361,9 +361,10 @@ class App extends Component {
             </div>
           </div>
           :
-          <div className="anim_fade_in d-flex align-items-center justify-content-center u-pos-fixed u-height-p-10 u-width-p-12 major-album-background">
+          <div className="d-flex align-items-center justify-content-center u-pos-fixed u-height-p-10 u-width-p-12 major-album-background">
             { (user && user.devices && user.devices.length) ?
-              <div style={{
+              <div className="anim_fade_in"
+                   style={{
                      width: 350
                    }}
               >
@@ -383,7 +384,7 @@ class App extends Component {
                 </ul>
               </div>
               :
-              <div className="text-center">
+              <div className="text-center anim_fade_in">
                 <span className="fa fa-circle-notch fa-3x fa-spin u-color-primary"></span>
                 <p className="mt-3 mb-0 u-color-white">Looking for a device...</p>
               </div>
