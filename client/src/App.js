@@ -372,7 +372,7 @@ class App extends Component {
                 </div>
                 <h3 className="mb-5 mt-4 u-color-white u-text-bold text-center u-nowrap">
                    <span className="fa fa-volume mr-4 u-color-primary"></span>
-                   Connect to a device
+                   Connect to a device<span className="u-color-primary">.</span>
                 </h3>
                 <ul className="list-group m-0">
                   <DeviceList devices={user.devices}
