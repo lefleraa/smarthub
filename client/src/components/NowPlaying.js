@@ -39,7 +39,7 @@ const TitleLockup = (props) => (
       {props.playingTrack.name}
     </h1>
     {props.playingTrack.explicit &&
-      <div className="badge u-bg-white u-color-black u-opacity-8">
+      <div className="badge u-bg-none u-border-1 u-border-color-white u-color-white u-opacity-4">
         EXPLICIT
       </div>
     }
@@ -263,7 +263,7 @@ class NowPlaying extends Component {
                              }}
             />
           </div>
-          <div className="col-auto p-0 pt-2">
+          <div className="col-auto p-0 pt-2 pb-4">
             <SeekControls playingState={playingState}
                           actions={{
                             onStopPlaybackPolling: stopPlaybackPolling,
@@ -271,7 +271,7 @@ class NowPlaying extends Component {
                           }}
             />
           </div>
-          <div className="col-auto p-0 pt-4 d-flex justify-content-between align-items-center">
+          <div className="col-auto p-0 d-flex justify-content-between align-items-center u-height-1">
             <DeviceSelector devices={user.devices}
                             activeDevice={playingState.device}
                             actions={{
