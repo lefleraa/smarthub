@@ -73,14 +73,14 @@ class SeekControls extends Component {
     let $seek_controls_bar    = $seek_controls.find('.progress-bar');
     let seek_controls_width   = $seek_controls.width();
 
-    let parentOffset          = $seek_controls.parent().offset();
-    let relX                  = 0;
-    let seek_percent          = 0;
-    let ms_position           = 0;
+    let parentOffset = $seek_controls.parent().offset();
+    let relX         = 0;
+    let seek_percent = 0;
+    let ms_position  = 0;
 
     function find_ms(e) {
       relX = e.pageX - parentOffset.left;
-      seek_percent = (relX / seek_controls_width);
+      seek_percent = Math.min(1, Math.max(0, (relX / seek_controls_width)));
       ms_position = Math.floor(playingState.item.duration_ms * seek_percent);
     }
 

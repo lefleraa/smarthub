@@ -18686,6 +18686,21 @@ p {
 .fab {
   font-family: 'Font Awesome 5 Brands';
 }
+body {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
 .avatar {
   height: 60px;
   max-height: 60px;
@@ -18777,6 +18792,12 @@ p {
   -moz-transition: none;
   -o-transition: none;
   transition: none;
+}
+.seek-controls.seek-controls-dragging .seek-controls-progress .seek-controls-handle {
+  -webkit-opacity: 1;
+  -moz-opacity: 1;
+  -o-opacity: 1;
+  opacity: 1;
 }
 body {
   background: #3f3f3f;
