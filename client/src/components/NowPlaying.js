@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 
 import SeekControls from './SeekControls';
+import AlbumArt from './AlbumArt';
 import DropMenu from './atoms/DropMenu';
 
 import * as _ from 'lodash';
@@ -23,7 +24,7 @@ const TitleLockup = (props) => (
           <span className="mr-3">•</span>
           <p className="mb-0 u-text-bold d-inline-block">
             {props.playingTrack.artists.map((artist, i) =>
-              <Fragment>
+              <Fragment key={artist.id}>
                 { (i > 0) &&
                   ", "
                 }
@@ -74,7 +75,8 @@ const DeviceSelector = (props) => (
         <DropMenu.Menu max={3}>
           { props.devices.map(device =>
             <DropMenu.MenuItem className={(device.id === props.activeDevice.id) ? 'active' : ''}
-                              onClick={() => props.actions.onSelect(device.id)}
+                               onClick={() => props.actions.onSelect(device.id)}
+                               key={device.id}
             >
               <div className="d-flex flex-nowrap align-items-center">
                 <div className="col-auto p-0 pr-3">
@@ -146,20 +148,7 @@ class NowPlaying extends Component {
 
     this.draggingSeek = false;
 
-    this.state = {
-      toggleImgSwap: true
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    let self = this;
-
-    if (nextProps.nowPlaying.playingTrack.id !== self.props.nowPlaying.playingTrack.id)
-    {
-      self.setState({
-        toggleImgSwap: !self.state.toggleImgSwap
-      });
-    }
+    this.state = {};
   }
 
   handleTogglePlay() {
@@ -292,17 +281,8 @@ class NowPlaying extends Component {
             <span className="far fa-fw fa-indent u-color-white"></span>
           </div>
         </div>
-        <div className="col-auto p-0 pt-5 pb-5 u-z-index-1">
-          { playingTrack &&
-            <div className={"d-flex flex-column u-height-p-10 major-album-art-wrap " + (toggleImgSwap ? "major-album-art-wrap-toggle-class" : "")}>
-              <img src={playingTrack.album.images[0].url}
-                  className="u-height-p-10 major-album-art major-album-art-1"
-              />
-              {/* <img src={playingTrack.album.images[0].url}
-                  className="u-height-p-10 major-album-art major-album-art-2"
-              /> */}
-            </div>
-          }
+        <div className="col-auto p-0 u-z-index-1">
+          <AlbumArt playingTrack={playingTrack} />
         </div>
       </div>
     );

@@ -144,7 +144,7 @@ class SeekControls extends Component {
             { timeFormat.fromS(trackProgressSeconds, 'mm:ss') }
           </div>
           <div>
-            { timeFormat.fromS(trackDurationSeconds, 'mm:ss') }
+            -{ timeFormat.fromS((trackDurationSeconds - trackProgressSeconds), 'mm:ss') }
           </div>
         </div>
       </div>
