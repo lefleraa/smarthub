@@ -57,7 +57,7 @@ const DeviceSelector = (props) => (
     { props.devices ?
       <DropMenu>
         <DropMenu.Toggle>
-          <div className="u-text-bold d-flex align-items-center u-color-primary u-cursor-pointer small u-text-uppercase">
+          <div className="d-flex align-items-center u-color-primary u-cursor-pointer small">
             <div className="col-auto p-0 pr-3">
               { props.activeDevice.type === "Smartphone" ?
                 <span className="far fa-fw fa-mobile"></span>
@@ -66,7 +66,7 @@ const DeviceSelector = (props) => (
               }
             </div>
             <div className="col p-0">
-              {props.activeDevice.name}
+              Listening on <span className="u-text-bold">{props.activeDevice.name}</span>
             </div>
             <div className="col-auto p-0 pl-2 u-opacity-6 small">
               <span className="far fa-fw fa-chevron-up"></span>
@@ -111,7 +111,7 @@ const PlayerControls = (props) => (
     <span className={"major-controls-icon far fa-fw fa-repeat"
                    + ((props.repeatMode === "context" || props.repeatMode === "track") ? " major-controls-icon-active" : "")
                    + ((props.repeatMode === "track") ? " major-controls-icon-repeat-track" : "") }
-          onClick={props.actions.onToggleShuffle}
+          onClick={props.actions.onChangeRepeat}
     ></span>
   </div>
 );
@@ -129,6 +129,7 @@ class NowPlaying extends Component {
     this.handleSkipToPrevious = this.handleSkipToPrevious.bind(this);
     this.handleSkipToNext = this.handleSkipToNext.bind(this);
     this.handleToggleShuffle = this.handleToggleShuffle.bind(this);
+    this.handleChangeRepeat = this.handleChangeRepeat.bind(this);
     this.handleSelectDevice = this.handleSelectDevice.bind(this);
     this.handleSeek = this.handleSeek.bind(this);
 
@@ -189,6 +190,19 @@ class NowPlaying extends Component {
     }
   }
 
+  handleChangeRepeat() {
+    let self = this;
+
+    const {
+      onChangeRepeat
+    } = self.props.actions;
+
+    if ( onChangeRepeat )
+    {
+      onChangeRepeat();
+    }
+  }
+
   handleSelectDevice(device_id) {
     let self = this;
 
@@ -242,7 +256,8 @@ class NowPlaying extends Component {
                               onSkipToPrevious: self.handleSkipToPrevious,
                               onSkipToNext: self.handleSkipToNext,
                               onTogglePlay: self.handleTogglePlay,
-                              onToggleShuffle: self.handleToggleShuffle
+                              onToggleShuffle: self.handleToggleShuffle,
+                              onChangeRepeat: self.handleChangeRepeat
                             }}
             />
           </div>
