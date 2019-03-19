@@ -19074,6 +19074,16 @@ ul.list-group li:hover {
 .major-album-art-wrap .major-album-art {
   animation-timing-function: ease-in-out;
 }
+.major-album-art-wrap:hover {
+  -webkit-opacity: 0.75;
+  -moz-opacity: 0.75;
+  -o-opacity: 0.75;
+  opacity: 0.75;
+  -webkit-transform: scale(0.98);
+  -moz-transform: scale(0.98);
+  -o-transform: scale(0.98);
+  transform: scale(0.98);
+}
 .major-album-art-wrap.major-album-art-wrap-paused {
   -webkit-transform: scale(0.93);
   -moz-transform: scale(0.93);
@@ -19084,15 +19094,15 @@ ul.list-group li:hover {
   -o-opacity: 0.5;
   opacity: 0.5;
 }
-.major-album-art-wrap:hover {
+.major-album-art-wrap.major-album-art-wrap-paused:hover {
   -webkit-opacity: 0.75;
   -moz-opacity: 0.75;
   -o-opacity: 0.75;
   opacity: 0.75;
-  -webkit-transform: scale(0.96);
-  -moz-transform: scale(0.96);
-  -o-transform: scale(0.96);
-  transform: scale(0.96);
+  -webkit-transform: scale(0.95);
+  -moz-transform: scale(0.95);
+  -o-transform: scale(0.95);
+  transform: scale(0.95);
 }
 @keyframes ALBUM_ART_ENTER {
   0% {

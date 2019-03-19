@@ -196,7 +196,7 @@ class App extends Component {
     }, callback);
   }
 
-  setPlaybackState(update, callback=_.noop()) {
+  optimisticSetPlaybackState(update, callback=_.noop()) {
     let self = this;
 
     const {
@@ -245,19 +245,23 @@ class App extends Component {
 
   playerPause(callback=_.noop()) {
     let self = this;
-    spotifyApi.pause().then(() => {
-      self.setPlaybackState({
-        is_playing: false
-      }, callback);
+
+    self.optimisticSetPlaybackState({
+      is_playing: false
+    }, () => {
+      spotifyApi.pause().then(() => {
+        self.startPlaybackPolling(callback);
+      });
     });
   }
 
   playerPlay(callback=_.noop()) {
     let self = this;
-    spotifyApi.play().then(() => {
-      self.setPlaybackState({
-        is_playing: true
-      }, () => {
+
+    self.optimisticSetPlaybackState({
+      is_playing: true
+    }, () => {
+      spotifyApi.play().then(() => {
         self.startPlaybackPolling(callback);
       });
     });
@@ -282,7 +286,7 @@ class App extends Component {
 
   playerShuffle(update, callback=_.noop()) {
     let self = this;
-    self.setPlaybackState({
+    self.optimisticSetPlaybackState({
       shuffle_state: update
     }, () => {
       spotifyApi.setShuffle(update).then(callback);
@@ -297,21 +301,35 @@ class App extends Component {
       repeat_state
     } = self.state.nowPlaying.playingState;
 
-    let new_state = 'off';
+    let new_repeat_state = 'off';
 
     if (repeat_state === 'off')
     {
-      new_state = 'context';
+      new_repeat_state = 'context';
     }
     else if (repeat_state === 'context')
     {
-      new_state = 'track';
+      new_repeat_state = 'track';
     }
 
-    self.setPlaybackState({
-      repeat_state: new_state
+    self.optimisticSetPlaybackState({
+      repeat_state: new_repeat_state
     }, () => {
-      spotifyApi.setRepeat(new_state).then(callback);
+      spotifyApi.setRepeat(new_repeat_state).then(callback);
+    });
+  }
+
+  seek(ms_position, callback=_.noop()) {
+    let self = this;
+
+    self.optimisticSetPlaybackState({
+      progress_ms: ms_position
+    }, () => {
+      spotifyApi.seek(ms_position).then(() => {
+        self.playerPlay(() => {
+          self.startPlaybackPolling(callback);
+        });
+      });
     });
   }
 
@@ -330,15 +348,6 @@ class App extends Component {
       self.seek(0, () => {
         self.playerPlay(callback);
       })
-    });
-  }
-
-  seek(ms_position, callback=_.noop()) {
-    let self = this;
-    spotifyApi.seek(ms_position).then(() => {
-      self.playerPlay(() => {
-        self.startPlaybackPolling(callback);
-      });
     });
   }
 
