@@ -9,6 +9,9 @@ import * as _ from 'lodash';
 class AlbumArt extends Component {
   constructor(props) {
     super(props);
+
+    this.handleTogglePlay = this.handleTogglePlay.bind(this);
+
     this.state = {
       toggleImgSwap: true
     };
@@ -35,11 +38,25 @@ class AlbumArt extends Component {
     }
   }
 
+  handleTogglePlay() {
+    let self = this;
+
+    const {
+      onTogglePlay
+    } = self.props.actions;
+
+    if ( onTogglePlay )
+    {
+      onTogglePlay();
+    }
+  }
+
   render() {
     let self = this;
 
     const {
-      playingTrack
+      playingTrack,
+      isPlaying
     } = self.props;
 
     const {
@@ -51,8 +68,11 @@ class AlbumArt extends Component {
     let previousArt = previousTrack ? previousTrack.album.images[0].url : currentArt;
 
     return (
-      <div className={"major-album-art-wrap" + (toggleImgSwap ? " major-album-art-wrap-toggle-class" : "")}
+      <div className={"major-album-art-wrap"
+                    + (toggleImgSwap ? " major-album-art-wrap-toggle-class" : "")
+                    + (!isPlaying ? " major-album-art-wrap-paused" : "")}
            id="major-album-art"
+           onClick={self.handleTogglePlay}
       >
         { playingTrack ?
           <Fragment>

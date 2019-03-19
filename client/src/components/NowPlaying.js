@@ -238,10 +238,6 @@ class NowPlaying extends Component {
     let self = this;
 
     const {
-      toggleImgSwap
-    } = self.state;
-
-    const {
       user,
       stopPlaybackPolling
     } = self.props;
@@ -266,7 +262,7 @@ class NowPlaying extends Component {
                               onSkipToNext: self.handleSkipToNext,
                               onTogglePlay: self.handleTogglePlay,
                               onToggleShuffle: self.handleToggleShuffle
-                             }}
+                            }}
             />
           </div>
           <div className="col-auto p-0 pt-2 pb-4">
@@ -288,7 +284,12 @@ class NowPlaying extends Component {
           </div>
         </div>
         <div className="col-auto p-0 u-z-index-1">
-          <AlbumArt playingTrack={playingTrack} />
+          <AlbumArt playingTrack={playingTrack}
+                    isPlaying={playingState.is_playing}
+                    actions={{
+                      onTogglePlay: self.handleTogglePlay
+                    }}
+          />
         </div>
       </div>
     );

@@ -196,6 +196,7 @@ body {
     .mb-5;
     .p-5;
     .mixin-width(100%);
+    cursor: pointer;
     img {
       .mixin-width(100%);
       .mixin-shadow(0 3px 9px rgba(0,0,0,0.5));
@@ -224,6 +225,17 @@ body {
 
   .major-album-art {
     animation-timing-function: ease-in-out;
+  }
+
+  .mixin-transform(scale(1));
+  .mixin-opacity(1);
+  .mixin-transition(all 0.3s ease-in-out);
+  &.major-album-art-wrap-paused {
+    .mixin-transform(scale(0.93));
+    .mixin-opacity(0.5);
+  }
+  &:hover {
+    .mixin-opacity(1);
   }
 
 }

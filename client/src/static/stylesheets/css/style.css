@@ -18962,6 +18962,18 @@ body {
   height: 100%;
   max-height: 100%;
   min-height: 100%;
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+  -webkit-opacity: 1;
+  -moz-opacity: 1;
+  -o-opacity: 1;
+  opacity: 1;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 .major-album-art-wrap .major-album-art {
   position: absolute;
@@ -18970,6 +18982,7 @@ body {
   width: 100%;
   max-width: 100%;
   min-width: 100%;
+  cursor: pointer;
 }
 .major-album-art-wrap .major-album-art img {
   width: 100%;
@@ -19010,6 +19023,22 @@ body {
 }
 .major-album-art-wrap .major-album-art {
   animation-timing-function: ease-in-out;
+}
+.major-album-art-wrap.major-album-art-wrap-paused {
+  -webkit-transform: scale(0.93);
+  -moz-transform: scale(0.93);
+  -o-transform: scale(0.93);
+  transform: scale(0.93);
+  -webkit-opacity: 0.5;
+  -moz-opacity: 0.5;
+  -o-opacity: 0.5;
+  opacity: 0.5;
+}
+.major-album-art-wrap:hover {
+  -webkit-opacity: 1;
+  -moz-opacity: 1;
+  -o-opacity: 1;
+  opacity: 1;
 }
 @keyframes ALBUM_ART_ENTER {
   0% {
