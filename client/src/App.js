@@ -87,9 +87,11 @@ class App extends Component {
     let self = this;
     self.getPlayingTrack(() => {
       self.getPlayerState(() => {
-        self.setNowPlayingState({
-          resolved: true
-        }, callback);
+        self.containsMySavedTracks(() => {
+          self.setNowPlayingState({
+            resolved: true
+          }, callback);
+        });
       });
     });
   }
@@ -153,6 +155,33 @@ class App extends Component {
         devices: data.devices
       }, callback);
     });
+  }
+
+  containsMySavedTracks(callback=_.noop()) {
+    let self = this;
+
+    const {
+      nowPlaying
+    } = self.state;
+
+    if (nowPlaying)
+    {
+      const {
+        playingTrack
+      } = nowPlaying;
+
+      if (playingTrack)
+      {
+        spotifyApi.containsMySavedTracks([playingTrack.id]).then((data) => {
+          self.setNowPlayingState({
+            in_favorites: data[0]
+          }, callback);
+        });
+      }
+    }
+    else if (callback) {
+      callback();
+    }
   }
 
   // SET

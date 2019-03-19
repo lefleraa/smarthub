@@ -14,7 +14,8 @@ class MeBar extends Component {
 
     const {
       loggedIn,
-      user
+      user,
+      nowPlaying
     } = self.props;
 
     return (
@@ -30,6 +31,8 @@ class MeBar extends Component {
 
             </Fragment>
           }
+          <span className={"major-controls-icon fal fa-fw fa-2x fa-check mt-5 " + (nowPlaying.in_favorites ? "major-controls-icon-active" : "")}></span>
+          <span className="major-controls-icon fal fa-fw fa-2x fa-plus  mt-5"></span>
           {/* { user.playlist &&
             <Fragment>
               {(user.playlist.items && user.playlist.items.length) && user.playlist.items.map(playlist =>
