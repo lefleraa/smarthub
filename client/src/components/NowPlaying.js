@@ -93,8 +93,20 @@ const DeviceSelector = (props) => (
                   }
                 </div>
                 <div className="col p-0">
-                  {device.name}
-                  <div className="small">{device.type}</div>
+                  { (device.id === props.activeDevice.id) ?
+                    <Fragment>
+                      <div className="u-text-bold">LISTENING ON</div>
+                      <div className="d-flex align-items-center flex-nowrap">
+                        <span className="fal fa-volume mr-2"></span>
+                        {device.name}
+                      </div>
+                    </Fragment>
+                    :
+                    <Fragment>
+                      {device.name}
+                      <div className="small">{device.type}</div>
+                    </Fragment>
+                  }
                 </div>
               </div>
             </DropMenu.MenuItem>

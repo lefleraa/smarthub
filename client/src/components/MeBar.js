@@ -3,6 +3,14 @@ import React, {
   Fragment
 } from 'react';
 
+const IconBtn = (props) =>(
+  <span className={"u-cursor-pointer fa-fw fa-lg fa-" + props.icon + " mt-5 "
+                 + (props.active ? "u-color-primary" : "u-color-white")
+                 + (props.activeWeight ? " fa" : " fal")}
+        onClick={props.handleClick}
+  ></span>
+);
+
 class MeBar extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +21,6 @@ class MeBar extends Component {
     let self = this;
 
     const {
-      loggedIn,
       user,
       nowPlaying
     } = self.props;
@@ -31,9 +38,20 @@ class MeBar extends Component {
 
             </Fragment>
           }
-          <span className="major-controls-icon fal fa-fw fa-2x fa-ellipsis-h mt-5"></span>
-          <span className="major-controls-icon fal fa-fw fa-2x fa-plus mt-5"></span>
-          <span className={"major-controls-icon fa-fw fa-2x fa-heart mt-5 " + (nowPlaying.in_favorites ? "fa major-controls-icon-active" : "fal")}></span>
+          <IconBtn icon="heart"
+                   active={nowPlaying.in_favorites ? "u-color-primary" : "u-color-white"}
+                   activeWeight="fa"
+                   handleClick={() => console.log("toggle saved")}
+          />
+          <IconBtn icon="clock"
+                   handleClick={() => console.log("view recently played")}
+          />
+          <IconBtn icon="plus-circle"
+                   handleClick={() => console.log("add to playlist")}
+          />
+          <IconBtn icon="ellipsis-h"
+                   handleClick={() => console.log("options")}
+          />
           {/* { user.playlist &&
             <Fragment>
               {(user.playlist.items && user.playlist.items.length) && user.playlist.items.map(playlist =>
