@@ -62,6 +62,11 @@ class App extends Component {
     self.startPlaybackPolling();
   }
 
+
+  ///////////////////////////////////
+  // POLLING
+  ///////////////////////////////////
+
   startPlaybackPolling(callback=_.noop()) {
     let self = this;
     self.stopPlaybackPolling(() => {
@@ -81,7 +86,10 @@ class App extends Component {
     }
   }
 
+
+  ///////////////////////////////////
   // GET
+  ///////////////////////////////////
 
   getPlayerData(callback=_.noop()) {
     let self = this;
@@ -184,7 +192,10 @@ class App extends Component {
     }
   }
 
+
+  ///////////////////////////////////
   // SET
+  ///////////////////////////////////
 
   setUserState(update, callback=_.noop()) {
     let self = this;
@@ -325,6 +336,11 @@ class App extends Component {
     let self = this;
     spotifyApi.transferMyPlayback([ device_id ]).then(callback);
   }
+
+
+  ///////////////////////////////////
+  // MAIN APP VIEW
+  ///////////////////////////////////
 
   render() {
     let self = this;

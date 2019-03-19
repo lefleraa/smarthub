@@ -31,8 +31,9 @@ class MeBar extends Component {
 
             </Fragment>
           }
-          <span className={"major-controls-icon fal fa-fw fa-2x fa-check mt-5 " + (nowPlaying.in_favorites ? "major-controls-icon-active" : "")}></span>
-          <span className="major-controls-icon fal fa-fw fa-2x fa-plus  mt-5"></span>
+          <span className="major-controls-icon fal fa-fw fa-2x fa-ellipsis-h mt-5"></span>
+          <span className="major-controls-icon fal fa-fw fa-2x fa-plus mt-5"></span>
+          <span className={"major-controls-icon fa-fw fa-2x fa-heart mt-5 " + (nowPlaying.in_favorites ? "fa major-controls-icon-active" : "fal")}></span>
           {/* { user.playlist &&
             <Fragment>
               {(user.playlist.items && user.playlist.items.length) && user.playlist.items.map(playlist =>
