@@ -1,14 +1,15 @@
+import './static/stylesheets/css/style.css';
+
 import React, {
   Component,
   Fragment
 } from 'react';
-import './static/stylesheets/css/style.css';
+
+import * as _ from 'lodash';
 import SpotifyWebApi from 'spotify-web-api-js';
 
 import MeBar from './components/MeBar'
 import NowPlaying from './components/NowPlaying'
-
-import * as _ from 'lodash';
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -17,7 +18,6 @@ class App extends Component {
     super();
 
     const params = this.getHashParams();
-    // console.log(params);
     const token = params.access_token;
 
     if (token) {
@@ -303,15 +303,6 @@ class App extends Component {
       nowPlaying
     } = self.state;
 
-    let playerActions = {
-      onTogglePlay:     self.toggleIsPlaying,
-      onSkipToNext:     self.skipToNext,
-      onSkipToPrevious: self.skipToPrevious,
-      onToggleShuffle:  self.toggleShuffle,
-      onSelectDevice:   self.transferToDevice,
-      onSeek:           self.seek
-    }
-
     let playerResolved = (nowPlaying.playingTrack && nowPlaying.playingState);
 
     return (
@@ -324,8 +315,15 @@ class App extends Component {
             <div className="d-flex u-pos-fixed u-height-p-10 u-width-p-12 major-album-background">
               <div className="col p-0">
                 <NowPlaying {...self.state}
-                            playerActions={playerActions}
                             stopPlaybackPolling={self.stopPlaybackPolling}
+                            actions={{
+                              onTogglePlay:     self.toggleIsPlaying,
+                              onSkipToNext:     self.skipToNext,
+                              onSkipToPrevious: self.skipToPrevious,
+                              onToggleShuffle:  self.toggleShuffle,
+                              onSelectDevice:   self.transferToDevice,
+                              onSeek:           self.seek
+                            }}
                 />
               </div>
               <div className="col-auto p-0 u-z-index-3">

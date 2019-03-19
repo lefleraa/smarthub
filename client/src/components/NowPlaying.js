@@ -6,8 +6,132 @@ import React, {
 import SeekControls from './SeekControls';
 import DropMenu from './atoms/DropMenu';
 
-import * as $ from "jquery"
 import * as _ from 'lodash';
+
+///////////////////////////////////
+// TITLE LOCKUP
+///////////////////////////////////
+
+const TitleLockup = (props) => (
+  <Fragment>
+    <div className="mb-5 u-color-white u-opacity-6">
+      <p className="mb-0 mr-3 u-text-bold d-inline-block">
+        {props.playingTrack.album.name}
+      </p>
+      { (props.playingTrack.artists && !!props.playingTrack.artists.length) &&
+        <Fragment>
+          <span className="mr-3">•</span>
+          <p className="mb-0 u-text-bold d-inline-block">
+            {props.playingTrack.artists.map((artist, i) =>
+              <Fragment>
+                { (i > 0) &&
+                  ", "
+                }
+                {artist.name}
+              </Fragment>
+            )}
+          </p>
+        </Fragment>
+      }
+    </div>
+    <h1 className="major-song-title u-color-white mb-2">
+      {props.playingTrack.name}
+    </h1>
+    {props.playingTrack.explicit &&
+      <div className="badge u-bg-white u-color-black u-opacity-8">
+        EXPLICIT
+      </div>
+    }
+  </Fragment>
+);
+
+
+///////////////////////////////////
+// DEVICE SELECTOR
+///////////////////////////////////
+
+const DeviceSelector = (props) => (
+  <Fragment>
+    { props.devices ?
+      <DropMenu>
+        <DropMenu.Toggle>
+          <div className="u-text-bold d-flex align-items-center u-color-white u-color-hover-primary u-cursor-pointer">
+            <div className="col-auto p-0 pr-3">
+              { props.activeDevice.type === "Smartphone" ?
+                <span className="far fa-fw fa-mobile"></span>
+                :
+                <span className="far fa-fw fa-desktop"></span>
+              }
+            </div>
+            <div className="col p-0 u-opacity-6 u-color-white">
+              {props.activeDevice.name}
+            </div>
+            <div className="col-auto p-0 pl-2 u-opacity-6 small u-color-white">
+              <span className="far fa-fw fa-chevron-up"></span>
+            </div>
+          </div>
+        </DropMenu.Toggle>
+        <DropMenu.Menu max={3}>
+          { props.devices.map(device =>
+            <DropMenu.MenuItem className={(device.id === props.activeDevice.id) ? 'active' : ''}
+                              onClick={() => props.actions.onSelect(device.id)}
+            >
+              <div className="d-flex flex-nowrap align-items-center">
+                <div className="col-auto p-0 pr-3">
+                  { (device.id === props.activeDevice.id) ?
+                    <span className="far fa-fw fa-check"></span>
+                    :
+                    <Fragment>
+                      { device.type === "Smartphone" ?
+                        <span className="far fa-fw fa-mobile"></span>
+                        :
+                        <span className="far fa-fw fa-desktop"></span>
+                      }
+                    </Fragment>
+                  }
+                </div>
+                <div className="col p-0">
+                  {device.name}
+                  <div className="small">{device.type}</div>
+                </div>
+              </div>
+            </DropMenu.MenuItem>
+          )}
+        </DropMenu.Menu>
+      </DropMenu>
+      :
+      <span className="far fa-fw fa-circle-notch fa-spin u-color-white"></span>
+    }
+  </Fragment>
+);
+
+///////////////////////////////////
+// PLAYER CONTROLS
+///////////////////////////////////
+
+const PlayerControls = (props) => (
+  <div className="d-flex justify-content-between align-items-center">
+    <div className="d-flex flex-nowrap align-items-center">
+      <span className="u-color-white u-color-hover-primary fa fa-step-backward fa-2x u-cursor-pointer"
+            onClick={props.actions.onSkipToPrevious}
+      ></span>
+      <span className={"u-color-white u-color-hover-primary fa fa-4x ml-5 mr-5 u-cursor-pointer " + "fa-" + (props.isPlaying ? "pause" : "play") + "-circle"}
+            onClick={props.actions.onTogglePlay}
+      ></span>
+      <span className="u-color-white u-color-hover-primary fa fa-step-forward fa-2x u-cursor-pointer"
+            onClick={props.actions.onSkipToNext}
+      ></span>
+    </div>
+    <span className={"major-controls-icon far fa-fw fa-random " + (props.isShuffle ? "major-controls-icon-active" : "") }
+          onClick={props.actions.onToggleShuffle}
+    ></span>
+  </div>
+);
+
+
+///////////////////////////////////
+// MAIN LAYOUT
+///////////////////////////////////
 
 class NowPlaying extends Component {
   constructor(props) {
@@ -27,24 +151,6 @@ class NowPlaying extends Component {
     };
   }
 
-  shouldComponentUpdate() {
-    let self = this;
-    return !self.draggingSeek;
-  }
-
-  componentDidMount() {
-    let self = this;
-    self.bindSeekDrag();
-  }
-
-  componentDidUpdate(prevProps) {
-    let self = this;
-
-    if (prevProps.nowPlaying.playingState.item.id !== self.props.nowPlaying.playingState.item.id) {
-      self.bindSeekDrag();
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
     let self = this;
 
@@ -61,7 +167,7 @@ class NowPlaying extends Component {
 
     const {
       onTogglePlay
-    } = self.props.playerActions;
+    } = self.props.actions;
 
     if ( onTogglePlay )
     {
@@ -74,7 +180,7 @@ class NowPlaying extends Component {
 
     const {
       onSkipToPrevious
-    } = self.props.playerActions;
+    } = self.props.actions;
 
     if ( onSkipToPrevious )
     {
@@ -87,7 +193,7 @@ class NowPlaying extends Component {
 
     const {
       onSkipToNext
-    } = self.props.playerActions;
+    } = self.props.actions;
 
     if ( onSkipToNext )
     {
@@ -100,7 +206,7 @@ class NowPlaying extends Component {
 
     const {
       onToggleShuffle
-    } = self.props.playerActions;
+    } = self.props.actions;
 
     if ( onToggleShuffle )
     {
@@ -113,7 +219,7 @@ class NowPlaying extends Component {
 
     const {
       onSelectDevice
-    } = self.props.playerActions;
+    } = self.props.actions;
 
     if ( onSelectDevice )
     {
@@ -126,72 +232,12 @@ class NowPlaying extends Component {
 
     const {
       onSeek
-    } = self.props.playerActions;
+    } = self.props.actions;
 
     if ( onSeek )
     {
       onSeek(ms_position, callback);
     }
-  }
-
-  bindSeekDrag() {
-    let self = this;
-
-    const {
-      stopPlaybackPolling
-    } = self.props;
-
-    const {
-      playingState
-    } = self.props.nowPlaying;
-
-    let $seek_controls        = $("#seek-controls");
-    let $seek_controls_handle = $seek_controls.find('.seek-controls-handle');
-    let $seek_controls_bar    = $seek_controls.find('.progress-bar');
-    let seek_controls_width   = $seek_controls.width();
-
-    let parentOffset          = $seek_controls.parent().offset();
-    let relX                  = 0;
-    let seek_percent          = 0;
-    let ms_position           = 0;
-
-    function find_ms(e) {
-      relX = e.pageX - parentOffset.left;
-      seek_percent = (relX / seek_controls_width);
-      ms_position = Math.floor(playingState.item.duration_ms * seek_percent);
-    }
-
-    function drag_controls() {
-      $seek_controls_handle.css({
-        left: seek_percent * 100 + "%"
-      });
-      $seek_controls_bar.css({
-        width: seek_percent * 100 + "%"
-      });
-    }
-
-    $seek_controls
-      .on('mousedown', function(e) {
-        self.draggingSeek = true;
-        $seek_controls.addClass('seek-controls-dragging');
-        stopPlaybackPolling(() => {
-          seek_controls_width = $seek_controls.width();
-          find_ms(e);
-          drag_controls();
-        });
-      })
-      .on('mousemove', function(e) {
-        if (self.draggingSeek)
-        {
-          find_ms(e);
-          drag_controls();
-        }
-      })
-      .on('mouseup', function(e) {
-        self.draggingSeek = false;
-        $seek_controls.removeClass('seek-controls-dragging');
-        self.handleSeek(ms_position);
-      });
   }
 
   render() {
@@ -202,7 +248,8 @@ class NowPlaying extends Component {
     } = self.state;
 
     const {
-      user
+      user,
+      stopPlaybackPolling
     } = self.props;
 
     const {
@@ -214,107 +261,34 @@ class NowPlaying extends Component {
       <div className="d-flex u-width-p-12 u-height-p-10">
         <div className="col p-5 u-z-index-2 d-flex flex-column">
           <div className="col p-0">
-            <div className="mb-5 u-color-white u-opacity-6">
-              <p className="mb-0 mr-3 u-text-bold d-inline-block">
-                {playingTrack.album.name}
-              </p>
-              { (playingTrack.artists && !!playingTrack.artists.length) &&
-                <Fragment>
-                  <span className="mr-3">•</span>
-                  <p className="mb-0 u-text-bold d-inline-block">
-                    {playingTrack.artists.map((artist, i) =>
-                      <Fragment>
-                        { (i > 0) &&
-                          ", "
-                        }
-                        {artist.name}
-                      </Fragment>
-                    )}
-                  </p>
-                </Fragment>
-              }
-            </div>
-            <h1 className="major-song-title u-color-white mb-2">
-              {playingTrack.name}
-            </h1>
-            {playingTrack.explicit &&
-              <div className="badge u-bg-white u-color-black u-opacity-8">
-                EXPLICIT
-              </div>
-            }
+            <TitleLockup playingTrack={playingTrack} />
           </div>
-          <div className="col-auto p-0 d-flex justify-content-between align-items-center">
-            <div className="d-flex flex-nowrap align-items-center">
-              <span className="u-color-white u-color-hover-primary fa fa-step-backward fa-2x u-cursor-pointer"
-                    onClick={self.handleSkipToPrevious}
-              ></span>
-              <span className={"u-color-white u-color-hover-primary fa fa-4x ml-5 mr-5 u-cursor-pointer " + "fa-" + (playingState.is_playing ? "pause" : "play") + "-circle"}
-                    onClick={self.handleTogglePlay}
-              ></span>
-              <span className="u-color-white u-color-hover-primary fa fa-step-forward fa-2x u-cursor-pointer"
-                    onClick={self.handleSkipToNext}
-              ></span>
-            </div>
-            <span className={"major-controls-icon far fa-fw fa-random " + (playingState.shuffle_state ? "major-controls-icon-active" : "") }
-                  onClick={self.handleToggleShuffle}
-            ></span>
+          <div className="col-auto p-0">
+            <PlayerControls isPlaying={playingState.is_playing}
+                            isShuffle={playingState.shuffle_state}
+                            actions={{
+                              onSkipToPrevious: self.handleSkipToPrevious,
+                              onSkipToNext: self.handleSkipToNext,
+                              onTogglePlay: self.handleTogglePlay,
+                              onToggleShuffle: self.handleToggleShuffle
+                             }}
+            />
           </div>
           <div className="col-auto p-0 pt-2">
             <SeekControls playingState={playingState}
-                          onSeek={self.handleSeek}
+                          actions={{
+                            onStopPlaybackPolling: stopPlaybackPolling,
+                            onSeek: self.handleSeek
+                          }}
             />
           </div>
           <div className="col-auto p-0 pt-4 d-flex justify-content-between align-items-center">
-            { user.devices ?
-              <DropMenu>
-                <DropMenu.Toggle>
-                  <div className="u-text-bold d-flex align-items-center u-color-white u-color-hover-primary u-cursor-pointer">
-                    <div className="col-auto p-0 pr-3">
-                      { playingState.device.type === "Smartphone" ?
-                        <span className="far fa-fw fa-mobile"></span>
-                        :
-                        <span className="far fa-fw fa-desktop"></span>
-                      }
-                    </div>
-                    <div className="col p-0 u-opacity-6 u-color-white">
-                      {playingState.device.name}
-                    </div>
-                    <div className="col-auto p-0 pl-2 u-opacity-6 small u-color-white">
-                      <span className="far fa-fw fa-chevron-up"></span>
-                    </div>
-                  </div>
-                </DropMenu.Toggle>
-                <DropMenu.Menu max={3}>
-                  { user.devices.map(device =>
-                    <DropMenu.MenuItem className={(device.id === playingState.device.id) ? 'active' : ''}
-                                       onClick={() => self.handleSelectDevice(device.id)}
-                    >
-                      <div className="d-flex flex-nowrap align-items-center">
-                        <div className="col-auto p-0 pr-3">
-                          { (device.id === playingState.device.id) ?
-                            <span className="far fa-fw fa-check"></span>
-                            :
-                            <Fragment>
-                              { device.type === "Smartphone" ?
-                                <span className="far fa-fw fa-mobile"></span>
-                                :
-                                <span className="far fa-fw fa-desktop"></span>
-                              }
-                            </Fragment>
-                          }
-                        </div>
-                        <div className="col p-0">
-                          {device.name}
-                          <div className="small">{device.type}</div>
-                        </div>
-                      </div>
-                    </DropMenu.MenuItem>
-                  )}
-                </DropMenu.Menu>
-              </DropMenu>
-              :
-              <span className="far fa-fw fa-circle-notch fa-spin u-color-white"></span>
-            }
+            <DeviceSelector devices={user.devices}
+                            activeDevice={playingState.device}
+                            actions={{
+                              onSelect: self.handleSelectDevice
+                            }}
+            />
             <span className="far fa-fw fa-indent u-color-white"></span>
           </div>
         </div>
