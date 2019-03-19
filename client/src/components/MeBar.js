@@ -3,6 +3,8 @@ import React, {
   Fragment
 } from 'react';
 
+import Avatar from './atoms/Avatar'
+
 const IconBtn = (props) =>(
   <span className={"u-cursor-pointer u-color-hover-primary fa-fw fa-lg fa-" + props.icon + " mt-5 "
                  + (props.active ? "u-color-primary" : "u-color-white")
@@ -28,16 +30,7 @@ class MeBar extends Component {
     return (
       <div className="pt-5 pb-5 pr-5 pl-0 u-height-p-10 d-flex flex-column align-items-center justify-content-between">
         <div className="d-flex flex-column align-items-center">
-          { user.me &&
-            <Fragment>
-              <a className="avatar"
-                 href='http://localhost:8888'
-              >
-                <img src={user.me.images[0].url} />
-              </a>
-
-            </Fragment>
-          }
+          <Avatar user={user} />
           <IconBtn icon="heart"
                    active={nowPlaying.in_favorites}
                    activeWeight="fa"

@@ -18702,6 +18702,8 @@ body {
                                   supported by Chrome and Opera */
 }
 .avatar {
+  display: -ms-inline-flexbox !important;
+  display: inline-flex !important;
   height: 60px;
   max-height: 60px;
   min-height: 60px;

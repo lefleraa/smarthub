@@ -8,10 +8,11 @@ import React, {
 import * as _ from 'lodash';
 import SpotifyWebApi from 'spotify-web-api-js';
 
-import MeBar from './components/MeBar'
+import MeBar      from './components/MeBar'
 import NowPlaying from './components/NowPlaying'
 import AlbumArtBg from './components/AlbumArtBg'
 import DeviceList from './components/DeviceList'
+import Avatar     from './components/atoms/Avatar';
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -366,7 +367,10 @@ class App extends Component {
                      width: 350
                    }}
               >
-                <h3 className="mb-5 u-color-white u-text-bold text-center u-nowrap">
+                <div className="text-center">
+                  <Avatar user={user} />
+                </div>
+                <h3 className="mb-5 mt-4 u-color-white u-text-bold text-center u-nowrap">
                    <span className="fa fa-volume mr-4 u-color-primary"></span>
                    Connect to a device
                 </h3>
