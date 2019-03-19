@@ -56,9 +56,11 @@ class AlbumArt extends Component {
       >
         { playingTrack ?
           <Fragment>
-            <div className="major-album-art major-album-art-1">
-              <img src={toggleImgSwap ?  previousArt : currentArt} />
-            </div>
+            { previousTrack &&
+              <div className="major-album-art major-album-art-1">
+                <img src={toggleImgSwap ?  previousArt : currentArt} />
+              </div>
+            }
             <div className="major-album-art major-album-art-2">
               <img src={!toggleImgSwap ? previousArt : currentArt} />
             </div>

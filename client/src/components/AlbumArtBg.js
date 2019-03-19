@@ -39,9 +39,11 @@ class AlbumArtBg extends Component {
 
     return (
       <div className={"major-album-background-wrap" + (toggleImgSwap ? " major-album-background-wrap-toggle-class" : "")}>
-        <div className="major-album-background-img major-album-background-img-1"
-              style={{backgroundImage: "url('" + (toggleImgSwap ?  previousArt : currentArt) + "')"}}
-        ></div>
+        { previousTrack &&
+          <div className="major-album-background-img major-album-background-img-1"
+                style={{backgroundImage: "url('" + (toggleImgSwap ?  previousArt : currentArt) + "')"}}
+          ></div>
+        }
         <div className="major-album-background-img major-album-background-img-2"
               style={{backgroundImage: "url('" + (!toggleImgSwap ? previousArt : currentArt) + "')"}}
         ></div>
