@@ -248,7 +248,7 @@ class NowPlaying extends Component {
 
     return (
       <div className="d-flex u-width-p-12 u-height-p-10">
-        <div className="col p-5 u-z-index-2 d-flex flex-column">
+        <div className="col pt-5 pb-5 pl-5 pr-0 u-z-index-2 d-flex flex-column">
           <div className="col p-0">
             <TitleLockup playingTrack={playingTrack} />
           </div>

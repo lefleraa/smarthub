@@ -10,6 +10,7 @@ import SpotifyWebApi from 'spotify-web-api-js';
 
 import MeBar from './components/MeBar'
 import NowPlaying from './components/NowPlaying'
+import AlbumArtBg from './components/AlbumArtBg'
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -309,9 +310,7 @@ class App extends Component {
       <Fragment>
         { playerResolved &&
           <Fragment>
-            <div className="u-pos-fixed u-height-p-10 u-width-p-12 major-album-background-img"
-                  style={{backgroundImage: "url('" + nowPlaying.playingTrack.album.images[0].url + "')"}}
-            ></div>
+            <AlbumArtBg playingTrack={nowPlaying.playingTrack} />
             <div className="d-flex u-pos-fixed u-height-p-10 u-width-p-12 major-album-background">
               <div className="col p-0">
                 <NowPlaying {...self.state}

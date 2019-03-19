@@ -18,7 +18,7 @@ class MeBar extends Component {
     } = self.props;
 
     return (
-      <div className="p-5 u-height-p-10 d-flex flex-column align-items-center justify-content-between">
+      <div className="pt-5 pb-5 pr-5 pl-0 u-height-p-10 d-flex flex-column align-items-center justify-content-between">
         <div className="d-flex flex-column align-items-center">
           { user.me &&
             <Fragment>

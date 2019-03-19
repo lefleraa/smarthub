@@ -13,15 +13,24 @@ class AlbumArt extends Component {
       toggleImgSwap: true
     };
   }
+  componentDidMount() {
+    let self = this;
+
+    let $albumArt = $('#major-album-art');
+    let albumHeight = $(window).height();
+    $albumArt.css({
+      width: albumHeight
+    })
+  }
 
   componentWillReceiveProps(nextProps) {
     let self = this;
 
     if (nextProps.playingTrack.id !== self.props.playingTrack.id)
     {
-      console.log("next song")
       self.setState({
-        toggleImgSwap: !self.state.toggleImgSwap
+        toggleImgSwap: !self.state.toggleImgSwap,
+        previousTrack: self.props.playingTrack
       });
     }
   }
@@ -34,20 +43,26 @@ class AlbumArt extends Component {
     } = self.props;
 
     const {
-      toggleImgSwap
+      toggleImgSwap,
+      previousTrack
     } = self.state;
 
+    let currentArt  = playingTrack.album.images[0].url;
+    let previousArt = previousTrack ? previousTrack.album.images[0].url : currentArt;
+
     return (
-      <div className="pt-5 pb-5 u-height-p-10">
+      <div className={"major-album-art-wrap" + (toggleImgSwap ? " major-album-art-wrap-toggle-class" : "")}
+           id="major-album-art"
+      >
         { playingTrack ?
-          <div className={"d-flex flex-column u-height-p-10 major-album-art-wrap" + (toggleImgSwap ? " major-album-art-wrap-toggle-class" : "")}>
-            <img src={playingTrack.album.images[0].url}
-                className="u-height-p-10 major-album-art major-album-art-1"
-            />
-            {/* <img src={playingTrack.album.images[0].url}
-                className="u-height-p-10 major-album-art major-album-art-2"
-            /> */}
-          </div>
+          <Fragment>
+            <div className="major-album-art major-album-art-1">
+              <img src={toggleImgSwap ?  previousArt : currentArt} />
+            </div>
+            <div className="major-album-art major-album-art-2">
+              <img src={!toggleImgSwap ? previousArt : currentArt} />
+            </div>
+          </Fragment>
           :
           ""
         }

@@ -18709,14 +18709,6 @@ p {
   line-height: 100px;
   font-weight: 900;
 }
-.major-album-art-wrap .major-album-art {
-  position: relative;
-  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-  -o-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-  margin-bottom: 3rem !important;
-}
 .seek-controls .seek-controls-progress {
   position: relative;
 }
@@ -18907,4 +18899,162 @@ body {
   left: 0;
   right: 0;
   cursor: default;
+}
+.major-album-art-wrap {
+  height: 100%;
+  max-height: 100%;
+  min-height: 100%;
+}
+.major-album-art-wrap .major-album-art {
+  position: absolute;
+  margin-bottom: 3rem !important;
+  padding: 3rem !important;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+}
+.major-album-art-wrap .major-album-art img {
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  -o-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+}
+.major-album-art-wrap .major-album-art-1 {
+  -webkit-animation: ALBUM_ART_ENTER 200ms 1;
+  -moz-animation: ALBUM_ART_ENTER 200ms 1;
+  -o-animation: ALBUM_ART_ENTER 200ms 1;
+  animation: ALBUM_ART_ENTER 200ms 1;
+  top: 0;
+}
+.major-album-art-wrap .major-album-art-2 {
+  -webkit-animation: ALBUM_ART_LEAVE 200ms 1;
+  -moz-animation: ALBUM_ART_LEAVE 200ms 1;
+  -o-animation: ALBUM_ART_LEAVE 200ms 1;
+  animation: ALBUM_ART_LEAVE 200ms 1;
+  top: -100%;
+}
+.major-album-art-wrap.major-album-art-wrap-toggle-class .major-album-art-1 {
+  -webkit-animation: ALBUM_ART_LEAVE 200ms 1;
+  -moz-animation: ALBUM_ART_LEAVE 200ms 1;
+  -o-animation: ALBUM_ART_LEAVE 200ms 1;
+  animation: ALBUM_ART_LEAVE 200ms 1;
+  top: -100%;
+}
+.major-album-art-wrap.major-album-art-wrap-toggle-class .major-album-art-2 {
+  -webkit-animation: ALBUM_ART_ENTER 200ms 1;
+  -moz-animation: ALBUM_ART_ENTER 200ms 1;
+  -o-animation: ALBUM_ART_ENTER 200ms 1;
+  animation: ALBUM_ART_ENTER 200ms 1;
+  top: 0;
+}
+.major-album-art-wrap .major-album-art {
+  animation-timing-function: ease-in-out;
+}
+@keyframes ALBUM_ART_ENTER {
+  0% {
+    top: 100%;
+  }
+  100% {
+    top: 0;
+  }
+}
+@keyframes ALBUM_ART_LEAVE {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: -100%;
+  }
+}
+.major-album-background-wrap {
+  position: fixed;
+  height: 100%;
+  max-height: 100%;
+  min-height: 100%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+}
+.major-album-background-wrap .major-album-background-img {
+  position: fixed;
+  height: 100%;
+  max-height: 100%;
+  min-height: 100%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+}
+.major-album-background-wrap .major-album-background-img-1 {
+  -webkit-animation: BG_ALBUM_ART_ENTER 200ms 1;
+  -moz-animation: BG_ALBUM_ART_ENTER 200ms 1;
+  -o-animation: BG_ALBUM_ART_ENTER 200ms 1;
+  animation: BG_ALBUM_ART_ENTER 200ms 1;
+  -webkit-opacity: 1;
+  -moz-opacity: 1;
+  -o-opacity: 1;
+  opacity: 1;
+}
+.major-album-background-wrap .major-album-background-img-2 {
+  -webkit-animation: BG_ALBUM_ART_LEAVE 200ms 1;
+  -moz-animation: BG_ALBUM_ART_LEAVE 200ms 1;
+  -o-animation: BG_ALBUM_ART_LEAVE 200ms 1;
+  animation: BG_ALBUM_ART_LEAVE 200ms 1;
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
+  -o-opacity: 0;
+  opacity: 0;
+}
+.major-album-background-wrap.major-album-background-wrap-toggle-class .major-album-background-img-1 {
+  -webkit-animation: BG_ALBUM_ART_LEAVE 200ms 1;
+  -moz-animation: BG_ALBUM_ART_LEAVE 200ms 1;
+  -o-animation: BG_ALBUM_ART_LEAVE 200ms 1;
+  animation: BG_ALBUM_ART_LEAVE 200ms 1;
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
+  -o-opacity: 0;
+  opacity: 0;
+}
+.major-album-background-wrap.major-album-background-wrap-toggle-class .major-album-background-img-2 {
+  -webkit-animation: BG_ALBUM_ART_ENTER 200ms 1;
+  -moz-animation: BG_ALBUM_ART_ENTER 200ms 1;
+  -o-animation: BG_ALBUM_ART_ENTER 200ms 1;
+  animation: BG_ALBUM_ART_ENTER 200ms 1;
+  -webkit-opacity: 1;
+  -moz-opacity: 1;
+  -o-opacity: 1;
+  opacity: 1;
+}
+.major-album-background-wrap .major-album-background-img {
+  animation-timing-function: ease-in-out;
+}
+@keyframes BG_ALBUM_ART_ENTER {
+  0% {
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    -o-opacity: 0;
+    opacity: 0;
+  }
+  100% {
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    -o-opacity: 1;
+    opacity: 1;
+  }
+}
+@keyframes BG_ALBUM_ART_LEAVE {
+  0% {
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    -o-opacity: 1;
+    opacity: 1;
+  }
+  100% {
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    -o-opacity: 0;
+    opacity: 0;
+  }
 }
