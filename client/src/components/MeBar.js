@@ -4,9 +4,9 @@ import React, {
 } from 'react';
 
 const IconBtn = (props) =>(
-  <span className={"u-cursor-pointer fa-fw fa-lg fa-" + props.icon + " mt-5 "
+  <span className={"u-cursor-pointer u-color-hover-primary fa-fw fa-lg fa-" + props.icon + " mt-5 "
                  + (props.active ? "u-color-primary" : "u-color-white")
-                 + (props.activeWeight ? " fa" : " fal")}
+                 + ((props.activeWeight && props.active) ? " fa" : " fal")}
         onClick={props.handleClick}
   ></span>
 );
@@ -39,7 +39,7 @@ class MeBar extends Component {
             </Fragment>
           }
           <IconBtn icon="heart"
-                   active={nowPlaying.in_favorites ? "u-color-primary" : "u-color-white"}
+                   active={nowPlaying.in_favorites}
                    activeWeight="fa"
                    handleClick={() => console.log("toggle saved")}
           />

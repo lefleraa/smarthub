@@ -11,6 +11,7 @@ import SpotifyWebApi from 'spotify-web-api-js';
 import MeBar from './components/MeBar'
 import NowPlaying from './components/NowPlaying'
 import AlbumArtBg from './components/AlbumArtBg'
+import DeviceList from './components/DeviceList'
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -93,14 +94,8 @@ class App extends Component {
 
   getPlayerData(callback=_.noop()) {
     let self = this;
-    self.getPlayingTrack(() => {
-      self.getPlayerState(() => {
-        self.containsMySavedTracks(() => {
-          self.setNowPlayingState({
-            resolved: true
-          }, callback);
-        });
-      });
+    self.getPlayerState(() => {
+      self.containsMySavedTracks(callback);
     });
   }
 
@@ -108,21 +103,8 @@ class App extends Component {
     let self = this;
     self.getUser(() => {
       self.getUserPlaylists(() => {
-        self.getMyDevices(() => {
-          self.setUserState({
-            resolved: true
-          }, callback);
-        });
+        self.getMyDevices(callback);
       });
-    });
-  }
-
-  getPlayingTrack(callback=_.noop()) {
-    let self = this;
-    spotifyApi.getMyCurrentPlayingTrack().then((data) => {
-      self.setNowPlayingState({
-        playingTrack: data.item
-      }, callback);
     });
   }
 
@@ -130,7 +112,8 @@ class App extends Component {
     let self = this;
     spotifyApi.getMyCurrentPlaybackState().then((data) => {
       self.setNowPlayingState({
-        playingState: data
+        playingState: data,
+        playingTrack: data.item
       }, callback);
     });
   }
@@ -346,15 +329,16 @@ class App extends Component {
     let self = this;
 
     const {
-      nowPlaying
+      nowPlaying,
+      user
     } = self.state;
 
     let playerResolved = (nowPlaying.playingTrack && nowPlaying.playingState);
 
     return (
       <Fragment>
-        { playerResolved &&
-          <Fragment>
+        { playerResolved ?
+          <div className="anim_fade_in">
             <AlbumArtBg playingTrack={nowPlaying.playingTrack} />
             <div className="d-flex u-pos-fixed u-height-p-10 u-width-p-12 major-album-background">
               <div className="col p-0">
@@ -374,7 +358,33 @@ class App extends Component {
                 <MeBar {...self.state} />
               </div>
             </div>
-          </Fragment>
+          </div>
+          :
+          <div className="anim_fade_in d-flex align-items-center justify-content-center u-pos-fixed u-height-p-10 u-width-p-12 major-album-background">
+            { (user && user.devices && user.devices.length) ?
+              <div style={{
+                     width: 350
+                   }}
+              >
+                <h3 className="mb-5 u-color-white u-text-bold text-center u-nowrap">
+                   <span className="fa fa-volume mr-4 u-color-primary"></span>
+                   Connect to a device
+                </h3>
+                <ul className="list-group m-0">
+                  <DeviceList devices={user.devices}
+                              actions={{
+                                onSelect: self.transferToDevice
+                              }}
+                  />
+                </ul>
+              </div>
+              :
+              <div className="text-center">
+                <span className="fa fa-circle-notch fa-3x fa-spin u-color-primary"></span>
+                <p className="mt-3 mb-0 u-color-white">Looking for a device...</p>
+              </div>
+            }
+          </div>
         }
       </Fragment>
     );

@@ -6,6 +6,7 @@ import React, {
 import SeekControls from './SeekControls';
 import AlbumArt from './AlbumArt';
 import DropMenu from './atoms/DropMenu';
+import DeviceList from './DeviceList'
 
 import * as _ from 'lodash';
 
@@ -73,44 +74,12 @@ const DeviceSelector = (props) => (
           </div>
         </DropMenu.Toggle>
         <DropMenu.Menu max={3}>
-          { props.devices.map(device =>
-            <DropMenu.MenuItem className={(device.id === props.activeDevice.id) ? 'active' : ''}
-                               onClick={() => props.actions.onSelect(device.id)}
-                               key={device.id}
-            >
-              <div className="d-flex flex-nowrap align-items-center">
-                <div className="col-auto p-0 pr-3">
-                  { (device.id === props.activeDevice.id) ?
-                    <span className="far fa-fw fa-check"></span>
-                    :
-                    <Fragment>
-                      { device.type === "Smartphone" ?
-                        <span className="far fa-fw fa-mobile"></span>
-                        :
-                        <span className="far fa-fw fa-desktop"></span>
-                      }
-                    </Fragment>
-                  }
-                </div>
-                <div className="col p-0">
-                  { (device.id === props.activeDevice.id) ?
-                    <Fragment>
-                      <div className="u-text-bold">LISTENING ON</div>
-                      <div className="d-flex align-items-center flex-nowrap">
-                        <span className="fal fa-volume mr-2"></span>
-                        {device.name}
-                      </div>
-                    </Fragment>
-                    :
-                    <Fragment>
-                      {device.name}
-                      <div className="small">{device.type}</div>
-                    </Fragment>
-                  }
-                </div>
-              </div>
-            </DropMenu.MenuItem>
-          )}
+          <DeviceList devices={props.devices}
+                      dropdown={true}
+                      actions={{
+                        onSelect: props.actions.onSelect
+                      }}
+          />
         </DropMenu.Menu>
       </DropMenu>
       :
