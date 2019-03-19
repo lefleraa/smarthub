@@ -31,7 +31,7 @@ body {
   .seek-controls-progress {
     position: relative;
     .progress{
-      background: fade(@color-white, 10%);
+      background: fade(@color-white, 15%);
       height: 4px;
       &,
       .progress-bar {
@@ -39,7 +39,7 @@ body {
       }
       .progress-bar {
         .mixin-transition(width 150ms linear);
-        background: @color-primary;
+        background: fade(@color-white, 65%);
       }
     }
     .seek-controls-handle {
@@ -50,9 +50,9 @@ body {
       bottom: 0;
       background: @color-white;
       .mixin-opacity(0);
-      .mixin-width(10px);
-      .mixin-height(10px);
-      .mixin-rounded(10px);
+      .mixin-width(13px);
+      .mixin-height(13px);
+      .mixin-rounded(13px);
       .mixin-transform(translateX(-50%));
       .mixin-transition(left 150ms linear);
       .mixin-transition(none);
@@ -61,6 +61,9 @@ body {
   }
   &:hover {
     .seek-controls-progress {
+      .progress-bar {
+        background: @color-primary;
+      }
       .seek-controls-handle {
         .mixin-opacity(1);
       }
@@ -133,25 +136,51 @@ body {
   }
 }
 
+.major-controls {
+  .fa {
+    .mixin-opacity(0.75);
+    cursor: pointer;
+    &:hover {
+      .mixin-opacity(1);
+    }
+  }
+}
+
 .major-controls-icon {
+  display: inline-block;
   color: @color-white;
   cursor: pointer;
   position: relative;
   &.major-controls-icon-active {
     color: @color-primary;
     &:after {
-      display: block;
-      content: '';
-      .mixin-height(4px);
-      .mixin-width(4px);
-      .mixin-rounded(4px);
-      background: @color-primary;
+      .d-flex;
+      .align-items-center;
+      .justify-content-center;
+      .mixin-rounded(8px);
       position: absolute;
-      bottom: -8px;
-      margin: auto;
+      margin-right: auto;
+      margin-left: auto;
       left: 0;
       right: 0;
       cursor: default;
+      background: @color-primary;
+      color: @color-gray-darkest;
+      font-size: 5px;
+      font-weight: 700;
+      font-family: @font-1;
+      .mixin-height(4px);
+      .mixin-width(4px);
+      bottom: -10px;
+      content: '';
+    }
+  }
+  &.major-controls-icon-repeat-track {
+    &:after {
+      .mixin-height(8px);
+      .mixin-width(8px);
+      bottom: -12px;
+      content: '1';
     }
   }
 }

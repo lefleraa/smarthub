@@ -56,7 +56,7 @@ const DeviceSelector = (props) => (
     { props.devices ?
       <DropMenu>
         <DropMenu.Toggle>
-          <div className="u-text-bold d-flex align-items-center u-color-white u-color-hover-primary u-cursor-pointer">
+          <div className="u-text-bold d-flex align-items-center u-color-primary u-cursor-pointer small u-text-uppercase">
             <div className="col-auto p-0 pr-3">
               { props.activeDevice.type === "Smartphone" ?
                 <span className="far fa-fw fa-mobile"></span>
@@ -64,10 +64,10 @@ const DeviceSelector = (props) => (
                 <span className="far fa-fw fa-desktop"></span>
               }
             </div>
-            <div className="col p-0 u-opacity-6 u-color-white">
+            <div className="col p-0">
               {props.activeDevice.name}
             </div>
-            <div className="col-auto p-0 pl-2 u-opacity-6 small u-color-white">
+            <div className="col-auto p-0 pl-2 u-opacity-6 small">
               <span className="far fa-fw fa-chevron-up"></span>
             </div>
           </div>
@@ -113,18 +113,23 @@ const DeviceSelector = (props) => (
 
 const PlayerControls = (props) => (
   <div className="d-flex justify-content-between align-items-center">
-    <div className="d-flex flex-nowrap align-items-center">
-      <span className="u-color-white u-color-hover-primary fa fa-step-backward fa-2x u-cursor-pointer"
+    <span className={"major-controls-icon far fa-fw fa-random " + (props.isShuffle ? "major-controls-icon-active" : "") }
+          onClick={props.actions.onToggleShuffle}
+    ></span>
+    <div className="d-flex flex-nowrap align-items-center major-controls">
+      <span className="u-color-white fa fa-step-backward fa-2x"
             onClick={props.actions.onSkipToPrevious}
       ></span>
-      <span className={"u-color-white u-color-hover-primary fa fa-4x ml-5 mr-5 u-cursor-pointer " + "fa-" + (props.isPlaying ? "pause" : "play") + "-circle"}
+      <span className={"u-hover-grow-2 u-color-white fa fa-4x ml-5 mr-5 " + "fa-" + (props.isPlaying ? "pause" : "play") + "-circle"}
             onClick={props.actions.onTogglePlay}
       ></span>
-      <span className="u-color-white u-color-hover-primary fa fa-step-forward fa-2x u-cursor-pointer"
+      <span className="u-color-white fa fa-step-forward fa-2x"
             onClick={props.actions.onSkipToNext}
       ></span>
     </div>
-    <span className={"major-controls-icon far fa-fw fa-random " + (props.isShuffle ? "major-controls-icon-active" : "") }
+    <span className={"major-controls-icon far fa-fw fa-repeat"
+                   + ((props.repeatMode === "context" || props.repeatMode === "track") ? " major-controls-icon-active" : "")
+                   + ((props.repeatMode === "track") ? " major-controls-icon-repeat-track" : "") }
           onClick={props.actions.onToggleShuffle}
     ></span>
   </div>
@@ -255,6 +260,7 @@ class NowPlaying extends Component {
           <div className="col-auto p-0">
             <PlayerControls isPlaying={playingState.is_playing}
                             isShuffle={playingState.shuffle_state}
+                            repeatMode={playingState.repeat_state}
                             actions={{
                               onSkipToPrevious: self.handleSkipToPrevious,
                               onSkipToNext: self.handleSkipToNext,

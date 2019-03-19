@@ -18728,7 +18728,7 @@ body {
   position: relative;
 }
 .seek-controls .seek-controls-progress .progress {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   height: 4px;
 }
 .seek-controls .seek-controls-progress .progress,
@@ -18743,7 +18743,7 @@ body {
   -moz-transition: width 150ms linear;
   -o-transition: width 150ms linear;
   transition: width 150ms linear;
-  background: #1DB954;
+  background: rgba(255, 255, 255, 0.65);
 }
 .seek-controls .seek-controls-progress .seek-controls-handle {
   position: absolute;
@@ -18756,16 +18756,16 @@ body {
   -moz-opacity: 0;
   -o-opacity: 0;
   opacity: 0;
-  width: 10px;
-  max-width: 10px;
-  min-width: 10px;
-  height: 10px;
-  max-height: 10px;
-  min-height: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -o-border-radius: 10px;
-  border-radius: 10px;
+  width: 13px;
+  max-width: 13px;
+  min-width: 13px;
+  height: 13px;
+  max-height: 13px;
+  min-height: 13px;
+  -webkit-border-radius: 13px;
+  -moz-border-radius: 13px;
+  -o-border-radius: 13px;
+  border-radius: 13px;
   -webkit-transform: translateX(-50%);
   -moz-transform: translateX(-50%);
   -o-transform: translateX(-50%);
@@ -18779,6 +18779,9 @@ body {
   -o-transition: none;
   transition: none;
   cursor: default;
+}
+.seek-controls:hover .seek-controls-progress .progress-bar {
+  background: #1DB954;
 }
 .seek-controls:hover .seek-controls-progress .seek-controls-handle {
   -webkit-opacity: 1;
@@ -18892,7 +18895,21 @@ body {
 .dropdown-menu .dropdown-item:hover {
   background: #343434;
 }
+.major-controls .fa {
+  -webkit-opacity: 0.75;
+  -moz-opacity: 0.75;
+  -o-opacity: 0.75;
+  opacity: 0.75;
+  cursor: pointer;
+}
+.major-controls .fa:hover {
+  -webkit-opacity: 1;
+  -moz-opacity: 1;
+  -o-opacity: 1;
+  opacity: 1;
+}
 .major-controls-icon {
+  display: inline-block;
   color: #FFFFFF;
   cursor: pointer;
   position: relative;
@@ -18901,25 +18918,45 @@ body {
   color: #1DB954;
 }
 .major-controls-icon.major-controls-icon-active:after {
-  display: block;
-  content: '';
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+  -ms-flex-pack: center !important;
+  justify-content: center !important;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -o-border-radius: 8px;
+  border-radius: 8px;
+  position: absolute;
+  margin-right: auto;
+  margin-left: auto;
+  left: 0;
+  right: 0;
+  cursor: default;
+  background: #1DB954;
+  color: #000000;
+  font-size: 5px;
+  font-weight: 700;
+  font-family: "Avenir", "Helvetica";
   height: 4px;
   max-height: 4px;
   min-height: 4px;
   width: 4px;
   max-width: 4px;
   min-width: 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 4px;
-  background: #1DB954;
-  position: absolute;
-  bottom: -8px;
-  margin: auto;
-  left: 0;
-  right: 0;
-  cursor: default;
+  bottom: -10px;
+  content: '';
+}
+.major-controls-icon.major-controls-icon-repeat-track:after {
+  height: 8px;
+  max-height: 8px;
+  min-height: 8px;
+  width: 8px;
+  max-width: 8px;
+  min-width: 8px;
+  bottom: -12px;
+  content: '1';
 }
 .major-album-art-wrap {
   height: 100%;
