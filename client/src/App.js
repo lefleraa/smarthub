@@ -37,6 +37,7 @@ class App extends Component {
 
     this.stopPlaybackPolling = this.stopPlaybackPolling.bind(this);
 
+    this.playbackPolling = undefined;
     this.pollingInterval = 1000;
 
     this.state = {
@@ -124,7 +125,7 @@ class App extends Component {
     let self = this;
 
     spotifyApi.getMe().then((data) => {
-      self.setUserState({
+      self.optimisticSetUserState({
         me: data
       }, callback);
     });
@@ -134,7 +135,7 @@ class App extends Component {
     let self = this;
 
     spotifyApi.getUserPlaylists().then((data) => {
-      self.setUserState({
+      self.optimisticSetUserState({
         playlist: data
       }, callback);
     });
@@ -144,7 +145,7 @@ class App extends Component {
     let self = this;
 
     spotifyApi.getMyDevices().then((data) => {
-      self.setUserState({
+      self.optimisticSetUserState({
         devices: data.devices
       }, callback);
     });
@@ -182,7 +183,7 @@ class App extends Component {
   // SET
   ///////////////////////////////////
 
-  setUserState(update, callback=_.noop()) {
+  optimisticSetUserState(update, callback=_.noop()) {
     let self = this;
 
     const {
