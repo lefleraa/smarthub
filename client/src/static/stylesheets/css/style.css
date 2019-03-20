@@ -18731,7 +18731,7 @@ body {
 }
 .seek-controls .seek-controls-progress .progress {
   background: rgba(255, 255, 255, 0.15);
-  height: 4px;
+  height: 3px;
 }
 .seek-controls .seek-controls-progress .progress,
 .seek-controls .seek-controls-progress .progress .progress-bar {
@@ -18942,10 +18942,10 @@ ul.list-group li:hover {
   background: #343434;
 }
 .major-controls .fa {
-  -webkit-opacity: 0.75;
-  -moz-opacity: 0.75;
-  -o-opacity: 0.75;
-  opacity: 0.75;
+  -webkit-opacity: 0.85;
+  -moz-opacity: 0.85;
+  -o-opacity: 0.85;
+  opacity: 0.85;
   cursor: pointer;
 }
 .major-controls .fa:hover {

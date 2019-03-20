@@ -16,14 +16,14 @@ import * as _ from 'lodash';
 
 const TitleLockup = (props) => (
   <Fragment>
-    <div className="mb-5 u-color-white u-opacity-6">
-      <p className="mb-0 mr-3 u-text-bold d-inline-block">
+    <div className="mb-5 u-color-white">
+      <p className="mb-0 mr-3 u-text-bold d-inline-block u-opacity-6">
         {props.playingTrack.album.name}
       </p>
       { (props.playingTrack.artists && !!props.playingTrack.artists.length) &&
         <Fragment>
-          <span className="mr-3">•</span>
-          <p className="mb-0 u-text-bold d-inline-block">
+          <span className="mr-3 u-color-primary">•</span>
+          <p className="mb-0 u-text-bold d-inline-block u-opacity-6">
             {props.playingTrack.artists.map((artist, i) =>
               <Fragment key={artist.id}>
                 { (i > 0) &&
@@ -244,39 +244,45 @@ class NowPlaying extends Component {
 
     return (
       <div className="d-flex u-width-p-12 u-height-p-10">
-        <div className="col pt-5 pb-5 pl-5 pr-0 u-z-index-2 d-flex flex-column">
-          <div className="col p-0">
-            <TitleLockup playingTrack={playingTrack} />
-          </div>
-          <div className="col-auto p-0">
-            <PlayerControls isPlaying={playingState.is_playing}
-                            isShuffle={playingState.shuffle_state}
-                            repeatMode={playingState.repeat_state}
+        <div className="col pt-5 pb-5 pl-5 pr-0 u-z-index-2">
+          <div className="d-flex flex-column u-height-p-10"
+               style={{
+                 maxWidth: 650
+               }}
+          >
+            <div className="col p-0">
+              <TitleLockup playingTrack={playingTrack} />
+            </div>
+            <div className="col-auto p-0">
+              <PlayerControls isPlaying={playingState.is_playing}
+                              isShuffle={playingState.shuffle_state}
+                              repeatMode={playingState.repeat_state}
+                              actions={{
+                                onSkipToPrevious: self.handleSkipToPrevious,
+                                onSkipToNext: self.handleSkipToNext,
+                                onTogglePlay: self.handleTogglePlay,
+                                onToggleShuffle: self.handleToggleShuffle,
+                                onChangeRepeat: self.handleChangeRepeat
+                              }}
+              />
+            </div>
+            <div className="col-auto p-0 pt-2 pb-4">
+              <SeekControls playingState={playingState}
                             actions={{
-                              onSkipToPrevious: self.handleSkipToPrevious,
-                              onSkipToNext: self.handleSkipToNext,
-                              onTogglePlay: self.handleTogglePlay,
-                              onToggleShuffle: self.handleToggleShuffle,
-                              onChangeRepeat: self.handleChangeRepeat
+                              onStopPlaybackPolling: stopPlaybackPolling,
+                              onSeek: self.handleSeek
                             }}
-            />
-          </div>
-          <div className="col-auto p-0 pt-2 pb-4">
-            <SeekControls playingState={playingState}
-                          actions={{
-                            onStopPlaybackPolling: stopPlaybackPolling,
-                            onSeek: self.handleSeek
-                          }}
-            />
-          </div>
-          <div className="col-auto p-0 d-flex justify-content-between align-items-center u-height-1">
-            <DeviceSelector devices={user.devices}
-                            activeDevice={playingState.device}
-                            actions={{
-                              onSelect: self.handleSelectDevice
-                            }}
-            />
-            <span className="far fa-fw fa-indent u-color-white"></span>
+              />
+            </div>
+            <div className="col-auto p-0 d-flex justify-content-between align-items-center u-height-1">
+              <DeviceSelector devices={user.devices}
+                              activeDevice={playingState.device}
+                              actions={{
+                                onSelect: self.handleSelectDevice
+                              }}
+              />
+              <span className="far fa-fw fa-indent u-color-white"></span>
+            </div>
           </div>
         </div>
         <div className="col-auto p-0 u-z-index-1">
