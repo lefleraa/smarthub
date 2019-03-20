@@ -19072,10 +19072,10 @@ ul.list-group li:hover {
   animation-timing-function: ease-in-out;
 }
 .major-album-art-wrap:hover {
-  -webkit-opacity: 0.75;
-  -moz-opacity: 0.75;
-  -o-opacity: 0.75;
-  opacity: 0.75;
+  -webkit-opacity: 1;
+  -moz-opacity: 1;
+  -o-opacity: 1;
+  opacity: 1;
   -webkit-transform: scale(0.98);
   -moz-transform: scale(0.98);
   -o-transform: scale(0.98);

@@ -20,13 +20,6 @@ class App extends Component {
   constructor(){
     super();
 
-    const params = this.getHashParams();
-    const token = params.access_token;
-
-    if (token) {
-      spotifyApi.setAccessToken(token);
-    }
-
     this.toggleIsPlaying = this.toggleIsPlaying.bind(this);
     this.skipToNext = this.skipToNext.bind(this);
     this.skipToPrevious = this.skipToPrevious.bind(this);
@@ -42,29 +35,44 @@ class App extends Component {
     this.pollingInterval = 750;
 
     this.state = {
-      loggedIn: token ? true : false,
+      loggedIn: false,
       user: {},
       nowPlaying: {}
     }
   }
 
-  getHashParams() {
-    let hashParams = {};
-    let e, r = /([^&;=]+)=?([^&;]*)/g,
-        q = window.location.hash.substring(1);
-    e = r.exec(q)
-    while (e) {
-       hashParams[e[1]] = decodeURIComponent(e[2]);
-       e = r.exec(q);
-    }
-    return hashParams;
-  }
-
   componentWillMount() {
     let self = this;
-    self.getUserData();
-    self.getPlayerData();
-    self.startPlaybackPolling();
+    self.init();
+  }
+
+  init() {
+    let self = this;
+
+    function getHashParams() {
+      let hashParams = {};
+      let e, r = /([^&;=]+)=?([^&;]*)/g,
+          q = window.location.hash.substring(1);
+      e = r.exec(q)
+      while (e) {
+         hashParams[e[1]] = decodeURIComponent(e[2]);
+         e = r.exec(q);
+      }
+      return hashParams;
+    }
+
+    let params = getHashParams();
+    let token  = params.access_token;
+
+    if ( token )
+    {
+      spotifyApi.setAccessToken(token);
+      self.setState({
+        loggedIn: true
+      }, () => {
+        self.startPlaybackPolling();
+      });
+    }
   }
 
 
@@ -437,6 +445,7 @@ class App extends Component {
     } = self.state;
 
     let playerResolved = (nowPlaying.playingTrack && nowPlaying.playingState);
+    let devicesResolved = (user.devices && user.devices.length);
 
     return (
       <Fragment>
@@ -469,7 +478,7 @@ class App extends Component {
           </div>
           :
           <div className="d-flex align-items-center justify-content-center u-pos-fixed u-height-p-10 u-width-p-12 major-album-background">
-            { (user && user.devices && user.devices.length) ?
+            { devicesResolved ?
               <div className="anim_fade_in"
                    style={{
                      width: 350

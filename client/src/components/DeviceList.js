@@ -48,13 +48,13 @@ class DeviceList extends Component {
               <div className="d-flex flex-nowrap align-items-center">
                 <div className="col-auto p-0 pr-3">
                   { device.is_active ?
-                    <span className="far fa-fw fa-check"></span>
+                    <span className="far fa-fw fa-lg fa-check"></span>
                     :
                     <Fragment>
                       { device.type === "Smartphone" ?
-                        <span className="far fa-fw fa-mobile"></span>
+                        <span className="far fa-fw fa-lg fa-mobile"></span>
                         :
-                        <span className="far fa-fw fa-desktop"></span>
+                        <span className="far fa-fw fa-lg fa-desktop"></span>
                       }
                     </Fragment>
                   }
