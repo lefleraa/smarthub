@@ -94,7 +94,7 @@ const DeviceSelector = (props) => (
 
 const PlayerControls = (props) => (
   <div className="d-flex justify-content-between align-items-center">
-    <span className={"major-controls-icon far fa-fw fa-random " + (props.isShuffle ? "major-controls-icon-active" : "") }
+    <span className={"major-controls-icon far fa-lg fa-fw fa-random " + (props.isShuffle ? "major-controls-icon-active" : "") }
           onClick={props.actions.onToggleShuffle}
     ></span>
     <div className="d-flex flex-nowrap align-items-center major-controls">
@@ -108,7 +108,7 @@ const PlayerControls = (props) => (
             onClick={props.actions.onSkipToNext}
       ></span>
     </div>
-    <span className={"major-controls-icon far fa-fw fa-repeat"
+    <span className={"major-controls-icon far fa-lg fa-fw fa-repeat"
                    + ((props.repeatMode === "track")   ? "  major-controls-icon-active major-controls-icon-repeat-track" : "")
                    + ((props.repeatMode === "context") ? " major-controls-icon-active" : "")}
           onClick={props.actions.onChangeRepeat}
