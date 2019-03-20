@@ -203,7 +203,7 @@ class NowPlaying extends Component {
     }
   }
 
-  handleSelectDevice(device_id) {
+  handleSelectDevice(device) {
     let self = this;
 
     const {
@@ -212,7 +212,7 @@ class NowPlaying extends Component {
 
     if ( onSelectDevice )
     {
-      onSelectDevice(device_id);
+      onSelectDevice(device);
     }
   }
 

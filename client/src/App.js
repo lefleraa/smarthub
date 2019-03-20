@@ -380,9 +380,13 @@ class App extends Component {
     });
   }
 
-  transferToDevice(device_id, callback=_.noop()) {
+  transferToDevice(device, callback=_.noop()) {
     let self = this;
-    spotifyApi.transferMyPlayback([ device_id ]).then(callback);
+    self.optimisticSetPlaybackState({
+      device: device
+    }, () => {
+      spotifyApi.transferMyPlayback([ device.id ]).then(callback);
+    });
   }
 
   toggleFavorite(callback=_.noop()) {

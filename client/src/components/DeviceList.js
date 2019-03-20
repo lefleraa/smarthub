@@ -42,7 +42,7 @@ class DeviceList extends Component {
           { devices.map(device =>
             <Tag className={(device.is_active ? ' active' : '')
                           + (dropdown ? " " : " list-group-item")}
-                 onClick={() => self.handleSelectDevice(device.id)}
+                 onClick={() => self.handleSelectDevice(device)}
                  key={device.id}
             >
               <div className="d-flex flex-nowrap align-items-center">
