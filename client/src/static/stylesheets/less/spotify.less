@@ -26,7 +26,7 @@ body {
   font-weight: 900;
 }
 
-@pollingInterval: 1000ms;
+@pollingInterval: 900ms;
 
 .seek-controls {
   .seek-controls-progress {
@@ -39,7 +39,7 @@ body {
         .mixin-rounded(8px);
       }
       .progress-bar {
-        .mixin-transition(width 150ms linear);
+        .mixin-transition(width @pollingInterval linear);
         background: fade(@color-white, 65%);
       }
     }
@@ -55,8 +55,7 @@ body {
       .mixin-height(13px);
       .mixin-rounded(13px);
       .mixin-transform(translateX(-50%));
-      .mixin-transition(left 150ms linear);
-      .mixin-transition(none);
+      .mixin-transition(left @pollingInterval linear);
       cursor: default;
     }
   }

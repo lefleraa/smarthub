@@ -38,7 +38,7 @@ class App extends Component {
     this.stopPlaybackPolling = this.stopPlaybackPolling.bind(this);
 
     this.playbackPolling = undefined;
-    this.pollingInterval = 1000;
+    this.pollingInterval = 900;
 
     this.state = {
       loggedIn: token ? true : false,
