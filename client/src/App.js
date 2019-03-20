@@ -34,11 +34,12 @@ class App extends Component {
     this.changeRepeat = this.changeRepeat.bind(this);
     this.transferToDevice = this.transferToDevice.bind(this);
     this.seek = this.seek.bind(this);
+    this.toggleFavorite = this.toggleFavorite.bind(this);
 
     this.stopPlaybackPolling = this.stopPlaybackPolling.bind(this);
 
     this.playbackPolling = undefined;
-    this.pollingInterval = 900;
+    this.pollingInterval = 750;
 
     this.state = {
       loggedIn: token ? true : false,
@@ -125,7 +126,7 @@ class App extends Component {
     let self = this;
 
     spotifyApi.getMe().then((data) => {
-      self.optimisticSetUserState({
+      self.setUserState({
         me: data
       }, callback);
     });
@@ -135,7 +136,7 @@ class App extends Component {
     let self = this;
 
     spotifyApi.getUserPlaylists().then((data) => {
-      self.optimisticSetUserState({
+      self.setUserState({
         playlist: data
       }, callback);
     });
@@ -145,7 +146,7 @@ class App extends Component {
     let self = this;
 
     spotifyApi.getMyDevices().then((data) => {
-      self.optimisticSetUserState({
+      self.setUserState({
         devices: data.devices
       }, callback);
     });
@@ -183,7 +184,7 @@ class App extends Component {
   // SET
   ///////////////////////////////////
 
-  optimisticSetUserState(update, callback=_.noop()) {
+  setUserState(update, callback=_.noop()) {
     let self = this;
 
     const {
@@ -247,25 +248,39 @@ class App extends Component {
   playerPause(callback=_.noop()) {
     let self = this;
 
-    self.optimisticSetPlaybackState({
-      is_playing: false
-    }, () => {
-      spotifyApi.pause().then(() => {
-        self.startPlaybackPolling(callback);
+    const {
+      is_playing
+    } = self.state.nowPlaying.playingState;
+
+    if (is_playing)
+    {
+      self.optimisticSetPlaybackState({
+        is_playing: false
+      }, () => {
+        spotifyApi.pause().then(() => {
+          self.startPlaybackPolling(callback);
+        });
       });
-    });
+    }
   }
 
   playerPlay(callback=_.noop()) {
     let self = this;
 
-    self.optimisticSetPlaybackState({
-      is_playing: true
-    }, () => {
-      spotifyApi.play().then(() => {
-        self.startPlaybackPolling(callback);
+    const {
+      is_playing
+    } = self.state.nowPlaying.playingState;
+
+    if (!is_playing)
+    {
+      self.optimisticSetPlaybackState({
+        is_playing: true
+      }, () => {
+        spotifyApi.play().then(() => {
+          self.startPlaybackPolling(callback);
+        });
       });
-    });
+    }
   }
 
   toggleShuffle(callback=_.noop()) {
@@ -357,10 +372,55 @@ class App extends Component {
     });
   }
 
-  transferToDevice(device_id, callback=_.noop())
-  {
+  transferToDevice(device_id, callback=_.noop()) {
     let self = this;
     spotifyApi.transferMyPlayback([ device_id ]).then(callback);
+  }
+
+  toggleFavorite(callback=_.noop()) {
+    let self = this;
+
+    const {
+      in_favorites
+    } = self.state.nowPlaying;
+
+    const {
+      id
+    } = self.state.nowPlaying.playingTrack;
+
+    if (in_favorites)
+    {
+      self.removeFromFavoriteTracks(id, callback);
+    }
+    else
+    {
+      self.addToFavoriteTracks(id, callback);
+    }
+
+  }
+
+  addToFavoriteTracks(track_id, callback=_.noop()) {
+    let self = this;
+
+    self.setNowPlayingState({
+      in_favorites: true
+    }, () => {
+      spotifyApi.addToMySavedTracks({
+        ids: [ track_id ]
+      }).then(callback);
+    });
+  }
+
+  removeFromFavoriteTracks(track_id, callback=_.noop()) {
+    let self = this;
+
+    self.setNowPlayingState({
+      in_favorites: false
+    }, () => {
+      spotifyApi.removeFromMySavedTracks({
+        ids: [ track_id ]
+      }).then(callback);
+    });
   }
 
 
@@ -399,7 +459,11 @@ class App extends Component {
                 />
               </div>
               <div className="col-auto p-0 u-z-index-3">
-                <MeBar {...self.state} />
+                <MeBar {...self.state}
+                       actions={{
+                         onToggleFavorite: self.toggleFavorite
+                       }}
+                />
               </div>
             </div>
           </div>

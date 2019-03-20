@@ -18741,10 +18741,10 @@ body {
   border-radius: 8px;
 }
 .seek-controls .seek-controls-progress .progress .progress-bar {
-  -webkit-transition: width 900ms linear;
-  -moz-transition: width 900ms linear;
-  -o-transition: width 900ms linear;
-  transition: width 900ms linear;
+  -webkit-transition: width 750ms linear;
+  -moz-transition: width 750ms linear;
+  -o-transition: width 750ms linear;
+  transition: width 750ms linear;
   background: rgba(255, 255, 255, 0.65);
 }
 .seek-controls .seek-controls-progress .seek-controls-handle {
@@ -18772,10 +18772,10 @@ body {
   -moz-transform: translateX(-50%);
   -o-transform: translateX(-50%);
   transform: translateX(-50%);
-  -webkit-transition: left 900ms linear;
-  -moz-transition: left 900ms linear;
-  -o-transition: left 900ms linear;
-  transition: left 900ms linear;
+  -webkit-transition: left 750ms linear;
+  -moz-transition: left 750ms linear;
+  -o-transition: left 750ms linear;
+  transition: left 750ms linear;
   cursor: default;
 }
 .seek-controls:hover .seek-controls-progress .progress-bar {

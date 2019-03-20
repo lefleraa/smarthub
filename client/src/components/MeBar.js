@@ -16,7 +16,21 @@ const IconBtn = (props) =>(
 class MeBar extends Component {
   constructor(props) {
     super(props);
+    this.handleToggleFavorite = this.handleToggleFavorite.bind(this);
     this.state = {};
+  }
+
+  handleToggleFavorite() {
+    let self = this;
+
+    const {
+      onToggleFavorite
+    } = self.props.actions;
+
+    if ( onToggleFavorite )
+    {
+      onToggleFavorite();
+    }
   }
 
   render() {
@@ -34,7 +48,7 @@ class MeBar extends Component {
           <IconBtn icon="heart"
                    active={nowPlaying.in_favorites}
                    activeWeight="fa"
-                   handleClick={() => console.log("toggle saved")}
+                   handleClick={self.handleToggleFavorite}
           />
           <IconBtn icon="clock"
                    handleClick={() => console.log("view recently played")}
