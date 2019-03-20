@@ -57,7 +57,7 @@ const DeviceSelector = (props) => (
     { props.devices ?
       <DropMenu>
         <DropMenu.Toggle>
-          <div className="d-flex align-items-center u-color-primary u-cursor-pointer small">
+          <div className="d-flex align-items-center u-color-primary u-cursor-pointer">
             <div className="col-auto p-0 pr-3">
               { props.activeDevice.type === "Smartphone" ?
                 <span className="far fa-fw fa-mobile"></span>
